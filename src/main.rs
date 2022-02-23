@@ -7,105 +7,105 @@ use std::{
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use fundsp::hacker::*;
 
-use gfx_lib::{
-    skia_safe::{self, Point, Rect},
-    widget::View,
-};
-use gfx_lib_macro::view_object;
+// use gfx_lib::{
+//     skia_safe::{self, Point, Rect},
+//     widget::View,
+// };
+// use gfx_lib_macro::view_object;
 
 mod oscillator;
 mod synth;
 mod util;
 
-#[view_object]
-struct Graph {
-    #[state]
-    data_points: Vec<f32>,
-}
+// #[view_object]
+// struct Graph {
+//     #[state]
+//     data_points: Vec<f32>,
+// }
 
-fn map(value: f32, istart: f32, istop: f32, ostart: f32, ostop: f32) -> f32 {
-    ostart + (ostop - ostart) * ((value - istart) / (istop - istart))
-}
+// fn map(value: f32, istart: f32, istop: f32, ostart: f32, ostop: f32) -> f32 {
+//     ostart + (ostop - ostart) * ((value - istart) / (istop - istart))
+// }
 
-impl View for Graph {
-    fn view(&mut self) -> Option<Arc<Mutex<dyn View>>> {
-        None
-    }
+// impl View for Graph {
+//     fn view(&mut self) -> Option<Arc<Mutex<dyn View>>> {
+//         None
+//     }
 
-    fn draw(
-        &mut self,
-        env: &gfx_lib::widget::Env,
-        canvas: &mut skia_safe::Canvas,
-        positioning: &gfx_lib::widget::ContentBox,
-    ) -> skia_safe::Rect {
-        let x = 40.0;
-        canvas.draw_rect(
-            Rect {
-                left: x,
-                right: x + 2.0,
-                top: 20.0,
-                bottom: env.windowed_context.window().inner_size().height as f32 - 40.0,
-            },
-            &skia_safe::Paint::new(skia_safe::colors::BLACK, None),
-        );
-        let width = env.windowed_context.window().inner_size().width as f32 - 80.0;
+//     fn draw(
+//         &mut self,
+//         env: &gfx_lib::widget::Env,
+//         canvas: &mut skia_safe::Canvas,
+//         positioning: &gfx_lib::widget::ContentBox,
+//     ) -> skia_safe::Rect {
+//         let x = 40.0;
+//         canvas.draw_rect(
+//             Rect {
+//                 left: x,
+//                 right: x + 2.0,
+//                 top: 20.0,
+//                 bottom: env.windowed_context.window().inner_size().height as f32 - 40.0,
+//             },
+//             &skia_safe::Paint::new(skia_safe::colors::BLACK, None),
+//         );
+//         let width = env.windowed_context.window().inner_size().width as f32 - 80.0;
 
-        canvas.draw_rect(
-            Rect {
-                left: x,
-                right: x + width,
-                top: env.windowed_context.window().inner_size().height as f32 - 42.0,
-                bottom: env.windowed_context.window().inner_size().height as f32 - 40.0,
-            },
-            &skia_safe::Paint::new(skia_safe::colors::BLACK, None),
-        );
+//         canvas.draw_rect(
+//             Rect {
+//                 left: x,
+//                 right: x + width,
+//                 top: env.windowed_context.window().inner_size().height as f32 - 42.0,
+//                 bottom: env.windowed_context.window().inner_size().height as f32 - 40.0,
+//             },
+//             &skia_safe::Paint::new(skia_safe::colors::BLACK, None),
+//         );
 
-        let mut last = (0.0f32, 0.0f32);
+//         let mut last = (0.0f32, 0.0f32);
 
-        for point in self.data_points.iter().enumerate() {
-            let current = (
-                map(
-                    point.0 as f32,
-                    0.0,
-                    self.data_points.len() as _,
-                    x + 1.0,
-                    x + width,
-                ),
-                map(
-                    *point.1,
-                    -1.0,
-                    1.0,
-                    env.windowed_context.window().inner_size().height as f32 - 42.0,
-                    20.0,
-                ),
-            );
-            if point.0 > 0 {
-                canvas.draw_line(
-                    Point {
-                        x: last.0,
-                        y: last.1,
-                    },
-                    Point {
-                        x: current.0,
-                        y: current.1,
-                    },
-                    &skia_safe::Paint::new(skia_safe::colors::RED, None).set_stroke_width(2.0),
-                );
-            }
-            last = current;
-        }
+//         for point in self.data_points.iter().enumerate() {
+//             let current = (
+//                 map(
+//                     point.0 as f32,
+//                     0.0,
+//                     self.data_points.len() as _,
+//                     x + 1.0,
+//                     x + width,
+//                 ),
+//                 map(
+//                     *point.1,
+//                     -1.0,
+//                     1.0,
+//                     env.windowed_context.window().inner_size().height as f32 - 42.0,
+//                     20.0,
+//                 ),
+//             );
+//             if point.0 > 0 {
+//                 canvas.draw_line(
+//                     Point {
+//                         x: last.0,
+//                         y: last.1,
+//                     },
+//                     Point {
+//                         x: current.0,
+//                         y: current.1,
+//                     },
+//                     &skia_safe::Paint::new(skia_safe::colors::RED, None).set_stroke_width(2.0),
+//                 );
+//             }
+//             last = current;
+//         }
 
-        positioning.content
-    }
-}
+//         positioning.content
+//     }
+// }
 
 use lazy_static::lazy_static;
 use midi_control::MidiMessage;
 use midir::MidiIO;
 
-lazy_static! {
-    pub static ref GRAPH: Arc<Mutex<Graph>> = { Arc::new(Mutex::new(Graph::new(vec![]))) };
-}
+// lazy_static! {
+//     pub static ref GRAPH: Arc<Mutex<Graph>> = { Arc::new(Mutex::new(Graph::new(vec![]))) };
+// }
 
 fn main() -> io::Result<()> {
     let host = cpal::default_host();
@@ -120,8 +120,9 @@ fn main() -> io::Result<()> {
         cpal::SampleFormat::I16 => run::<i16>(&device, &config.into()),
         cpal::SampleFormat::U16 => run::<u16>(&device, &config.into()),
     });
+    loop {}
 
-    gfx_lib::start(GRAPH.clone());
+    // gfx_lib::start(GRAPH.clone());
     Ok(())
 }
 

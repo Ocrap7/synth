@@ -13,8 +13,6 @@ use cpal::{
     Sample, SampleFormat, Stream, StreamConfig,
 };
 
-use crate::GRAPH;
-use gfx_lib::widget::Updater;
 
 pub trait SoundWriter {
     fn next_sample(&mut self) -> f32;

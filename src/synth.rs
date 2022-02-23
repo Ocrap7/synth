@@ -155,7 +155,7 @@ impl Voice<'_> {
             let osc_cb: Box<dyn Fn(f64) -> f64 + Send + Sync> = Box::new(move |_| {
                 (*osc_freq.lock().unwrap() + ((i as f64 - 1.0) * 0.5)) * *osc_vol.lock().unwrap()
             });
-            let osc = lfo(osc_cb) >> saw() >> lowpass_hz(500.0, 1.0);
+            let osc = lfo(osc_cb) >> saw() >> lowpass_hz(800.0, 1.0);
             self.oscillators.push(osc);
         }
     }

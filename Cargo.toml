@@ -8,8 +8,8 @@ edition = "2021"
 [dependencies]
 cpal = "0.13.5"
 audio = "0.2.0-alpha.3"
-gfx_lib = {path="../gfx_lib/gfx_lib"}
-gfx_lib_macro = {path="../gfx_lib/gfx_lib_macro"}
+# gfx_lib = {path="../gfx_lib/gfx_lib"}
+# gfx_lib_macro = {path="../gfx_lib/gfx_lib_macro"}
 lazy_static = "1.4.0"
 modulator = "0.1.0"
 midi-control = "0.2.0"
